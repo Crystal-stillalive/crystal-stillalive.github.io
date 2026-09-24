@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pyae Shunn Le Maung — Software Engineering Student</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧪</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #FBFAF7;
+    --paper-alt: #F1EFE9;
+    --ink: #1C1E22;
+    --ink-soft: #52565F;
+    --navy: #182338;
+    --navy-soft: #2A3752;
+    --teal: #1F7A5C;
+    --teal-soft: #E4F1EC;
+    --amber: #B8752E;
+    --line: #DEDBD2;
+    --line-on-navy: #3A4867;
+    font-size: 17px;
+  }
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --paper: #14161A;
+      --paper-alt: #1B1E24;
+      --ink: #EDECE8;
+      --ink-soft: #A7ABB5;
+      --navy: #0D131F;
+      --navy-soft: #1B2740;
+      --teal: #4FBE93;
+      --teal-soft: #17261F;
+      --amber: #D89A5C;
+      --line: #2C2F36;
+      --line-on-navy: #2C3752;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #14161A;
+    --paper-alt: #1B1E24;
+    --ink: #EDECE8;
+    --ink-soft: #A7ABB5;
+    --navy: #0D131F;
+    --navy-soft: #1B2740;
+    --teal: #4FBE93;
+    --teal-soft: #17261F;
+    --amber: #D89A5C;
+    --line: #2C2F36;
+    --line-on-navy: #2C3752;
+  }
+
+  * { box-sizing: border-box; }
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(72px + env(safe-area-inset-top, 0px));
+  }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 { font-family: "Fraunces", serif; font-weight: 500; margin: 0; }
+  .mono { font-family: "JetBrains Mono", ui-monospace, monospace; }
+  a { color: inherit; }
+  img, svg { max-width: 100%; }
+
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 28px; }
+  .wrap-wide { max-width: 900px; margin: 0 auto; padding: 0 28px; }
+
+  /* Nav */
+  nav {
+    position: sticky; top: 0; z-index: 10;
+    background: color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+  .nav-inner {
+    max-width: 900px; margin: 0 auto; padding: 16px 28px;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .nav-name { font-family: "Fraunces", serif; font-size: 1.05rem; font-weight: 500; text-decoration: none; }
+  .nav-links { display: flex; gap: 22px; font-size: 0.92rem; }
+  .nav-links a { text-decoration: none; color: var(--ink-soft); border-bottom: 1px solid transparent; padding-bottom: 2px; transition: color .15s, border-color .15s; }
+  .nav-links a:hover, .nav-links a:focus-visible { color: var(--ink); border-color: var(--teal); }
+
+  /* Hero */
+  .hero { padding: 64px 0 56px; border-bottom: 1px solid var(--line); }
+  .status {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 0.85rem; color: var(--ink-soft);
+    margin-bottom: 22px;
+  }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--teal); flex-shrink: 0; }
+  .hero h1 { font-size: clamp(2.1rem, 5.5vw, 3rem); line-height: 1.12; letter-spacing: -0.01em; max-width: 14ch; }
+  .hero .role { font-size: 1.15rem; color: var(--ink-soft); margin-top: 14px; max-width: 42ch; }
+  .hero .summary { margin-top: 20px; max-width: 56ch; color: var(--ink-soft); }
+  .cta-row { display: flex; gap: 12px; margin-top: 32px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 11px 20px; border-radius: 3px; font-size: 0.92rem;
+    text-decoration: none; border: 1px solid var(--ink);
+    transition: background .15s, color .15s;
+  }
+  .btn-primary { background: var(--ink); color: var(--paper); }
+  .btn-primary:hover { background: var(--teal); border-color: var(--teal); }
+  .btn-ghost { border-color: var(--line); color: var(--ink); }
+  .btn-ghost:hover { border-color: var(--ink); }
+
+  /* Section shared */
+  section { padding: 56px 0; border-bottom: 1px solid var(--line); }
+  .eyebrow-num { font-size: 0.8rem; color: var(--ink-soft); margin-bottom: 6px; }
+  h2.section-title { font-size: 1.6rem; margin-bottom: 28px; }
+
+  /* About stats */
+  .about-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 48px; }
+  @media (max-width: 640px) { .about-grid { grid-template-columns: 1fr; gap: 32px; } }
+  .stat-list { border-top: 1px solid var(--line); }
+  .stat-row {
+    display: flex; justify-content: space-between; padding: 12px 0;
+    border-bottom: 1px solid var(--line); font-size: 0.94rem;
+  }
+  .stat-row span:first-child { color: var(--ink-soft); }
+  .stat-row span:last-child { font-family: "JetBrains Mono", monospace; font-size: 0.88rem; }
+
+  /* Skills */
+  .skill-group { margin-bottom: 22px; }
+  .skill-label { font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 10px; }
+  .tag-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag {
+    font-family: "JetBrains Mono", monospace; font-size: 0.82rem;
+    padding: 5px 10px; border: 1px solid var(--line); border-radius: 3px;
+    background: var(--paper-alt);
+  }
+
+  /* Projects */
+  .project {
+    border: 1px solid var(--line); border-radius: 4px;
+    margin-bottom: 14px; overflow: hidden; background: var(--paper);
+  }
+  .project summary {
+    list-style: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 18px 20px;
+  }
+  .project summary::-webkit-details-marker { display: none; }
+  .project-title-row { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .project-title { font-family: "Fraunces", serif; font-size: 1.15rem; }
+  .project-tagline { color: var(--ink-soft); font-size: 0.9rem; }
+  .chevron { font-family: "JetBrains Mono", monospace; color: var(--ink-soft); transition: transform .2s; flex-shrink: 0; }
+  details[open] .chevron { transform: rotate(90deg); }
+  .project-body { padding: 0 20px 22px; }
+  .project-body ul { margin: 0 0 16px; padding-left: 18px; color: var(--ink-soft); font-size: 0.94rem; }
+  .project-body li { margin-bottom: 6px; }
+  .project-links { display: flex; gap: 16px; font-size: 0.88rem; }
+  .project-links a { text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 3px; }
+  .project-links a:hover { text-decoration-color: var(--teal); }
+
+  /* Timeline (education/experience) */
+  .tl-item { display: grid; grid-template-columns: 130px 1fr; gap: 20px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+  .tl-item:last-child { border-bottom: none; }
+  .tl-date { font-family: "JetBrains Mono", monospace; font-size: 0.82rem; color: var(--ink-soft); padding-top: 3px; }
+  .tl-title { font-size: 1.02rem; margin-bottom: 4px; }
+  .tl-org { color: var(--ink-soft); font-size: 0.9rem; margin-bottom: 8px; }
+  .tl-desc { color: var(--ink-soft); font-size: 0.92rem; }
+  @media (max-width: 560px) { .tl-item { grid-template-columns: 1fr; gap: 4px; } }
+
+  /* Contact */
+  .contact-section { background: var(--navy); color: #EDECE8; border-bottom: none; }
+  .contact-section .ink-soft-navy { color: #A9B3C9; }
+  .contact-section h2 { color: #EDECE8; }
+  .contact-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 32px; }
+  @media (max-width: 560px) { .contact-grid { grid-template-columns: 1fr; } }
+  .contact-card {
+    border: 1px solid var(--line-on-navy); border-radius: 4px; padding: 18px 20px;
+    text-decoration: none; color: inherit;
+    transition: border-color .15s, background .15s;
+  }
+  .contact-card:hover { border-color: var(--teal); background: var(--navy-soft); }
+  .contact-card .label { font-size: 0.78rem; color: #A9B3C9; margin-bottom: 6px; }
+  .contact-card .value { font-family: "JetBrains Mono", monospace; font-size: 0.92rem; word-break: break-word; }
+
+  footer { padding: 28px 0 calc(28px + env(safe-area-inset-bottom, 0px)); text-align: center; font-size: 0.82rem; color: var(--ink-soft); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-name" href="#top">Pyae Shunn Le Maung</a>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#experience">Experience</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap-wide">
+    <div class="status"><span class="dot"></span> Open to internships — Bangkok or remote, available now</div>
+    <h1>Pyae Shunn Le Maung</h1>
+    <p class="role">Software Engineering student building and testing full-stack web and mobile applications.</p>
+    <p class="summary">Based in Chiang Rai, Thailand. I work across the frontend and API layer — React, React Native, Firebase, FastAPI — and I'm comfortable in the testing side too: debugging, API testing, and iterating from real test results rather than guesswork.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#projects">View projects</a>
+      <a class="btn btn-ghost" href="#contact">Get in touch</a>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap-wide">
+    <h2 class="section-title">About</h2>
+    <div class="about-grid">
+      <div>
+        <p>I'm a Software Engineering student at Mae Fah Luang University, expecting to graduate in 2028. Most of what I know, I've learned by building — four shipped projects across web, mobile, and full-stack systems, plus a term spent as a teaching assistant helping other students debug their way through data structures and algorithms.</p>
+        <p>I lean frontend, but I understand the layers underneath well enough to be useful across a whole team — from a REST API to a Firestore schema to a test suite.</p>
+      </div>
+      <div class="stat-list">
+        <div class="stat-row"><span>Location</span><span>Chiang Rai, TH</span></div>
+        <div class="stat-row"><span>Focus</span><span>Frontend / QA</span></div>
+        <div class="stat-row"><span>Projects shipped</span><span>4</span></div>
+        <div class="stat-row"><span>Graduating</span><span>2028</span></div>
+        <div class="stat-row"><span>Status</span><span>Available now</span></div>
+      </div>
+    </div>
+
+    <div style="margin-top: 44px;">
+      <div class="skill-group">
+        <div class="skill-label">Languages</div>
+        <div class="tag-row">
+          <span class="tag">JavaScript</span><span class="tag">Python</span><span class="tag">Java</span><span class="tag">Go</span><span class="tag">SQL</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-label">Frameworks</div>
+        <div class="tag-row">
+          <span class="tag">React</span><span class="tag">React Native</span><span class="tag">Expo</span><span class="tag">FastAPI</span><span class="tag">Vite</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-label">Backend &amp; data</div>
+        <div class="tag-row">
+          <span class="tag">Firebase</span><span class="tag">Firestore</span><span class="tag">PostgreSQL</span><span class="tag">REST APIs</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-label">Tooling</div>
+        <div class="tag-row">
+          <span class="tag">Git</span><span class="tag">GitHub</span><span class="tag">Docker</span><span class="tag">VS Code</span><span class="tag">Agile</span><span class="tag">API Testing</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap-wide">
+    <h2 class="section-title">Projects</h2>
+
+    <details class="project" open>
+      <summary>
+        <div class="project-title-row">
+          <span class="project-title">SCK Online Store</span>
+          <span class="project-tagline">Full-stack e-commerce system</span>
+        </div>
+        <span class="chevron">›</span>
+      </summary>
+      <div class="project-body">
+        <ul>
+          <li>Worked across a full-stack e-commerce system spanning frontend, backend APIs, databases, and automated testing</li>
+          <li>Built and tested with Go, Node.js, React/Next.js, and Docker</li>
+          <li>Performed API testing and debugging with Postman, Newman, and Robot Framework, iterating implementation based on real test results</li>
+        </ul>
+        <div class="project-links">
+          <a href="https://github.com/Crystal-stillalive" target="_blank" rel="noopener">View on GitHub</a>
+        </div>
+      </div>
+    </details>
+
+    <details class="project">
+      <summary>
+        <div class="project-title-row">
+          <span class="project-title">PathMatch</span>
+          <span class="project-tagline">Career recommendation system</span>
+        </div>
+        <span class="chevron">›</span>
+      </summary>
+      <div class="project-body">
+        <ul>
+          <li>Built the frontend interface for survey input, results display, and overall user flow</li>
+          <li>Worked as part of a team building a career recommendation system, handling the frontend while teammates built the classification model</li>
+        </ul>
+        <div class="project-links">
+          <a href="https://github.com/Crystal-stillalive" target="_blank" rel="noopener">View on GitHub</a>
+        </div>
+      </div>
+    </details>
+
+    <details class="project">
+      <summary>
+        <div class="project-title-row">
+          <span class="project-title">StudyMate</span>
+          <span class="project-tagline">Student productivity app</span>
+        </div>
+        <span class="chevron">›</span>
+      </summary>
+      <div class="project-body">
+        <ul>
+          <li>Built a React Native / Expo mobile app with authentication, calendar, timer, stopwatch, flashcards, notes, and settings</li>
+          <li>Integrated Firebase Authentication and database services</li>
+          <li>Managed app navigation and resolved development and dependency issues</li>
+        </ul>
+        <div class="project-links">
+          <a href="https://github.com/Crystal-stillalive" target="_blank" rel="noopener">View on GitHub</a>
+        </div>
+      </div>
+    </details>
+
+    <details class="project">
+      <summary>
+        <div class="project-title-row">
+          <span class="project-title">Eco Habits App</span>
+          <span class="project-tagline">Mobile habit tracker</span>
+        </div>
+        <span class="chevron">›</span>
+      </summary>
+      <div class="project-body">
+        <ul>
+          <li>Built a React Native / Expo app for tracking environmentally friendly habits</li>
+          <li>Implemented authentication, habit tracking, daily challenges, and Firestore data storage</li>
+        </ul>
+        <div class="project-links">
+          <a href="https://github.com/Crystal-stillalive" target="_blank" rel="noopener">View on GitHub</a>
+        </div>
+      </div>
+    </details>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap-wide">
+    <h2 class="section-title">Education &amp; experience</h2>
+    <div class="tl-item">
+      <div class="tl-date">2024 — 2028</div>
+      <div>
+        <div class="tl-title">B.Sc. Software Engineering</div>
+        <div class="tl-org">Mae Fah Luang University, Chiang Rai</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">Ongoing</div>
+      <div>
+        <div class="tl-title">Teaching Assistant — Data Structures &amp; Algorithms Lab</div>
+        <div class="tl-org">Mae Fah Luang University</div>
+        <div class="tl-desc">Assisting students with programming, data structures, algorithms, and debugging during lab sessions.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="contact-section">
+  <div class="wrap-wide">
+    <h2 class="section-title">Get in touch</h2>
+    <p class="ink-soft-navy" style="max-width: 48ch;">Open to internships in Bangkok or remote. The fastest way to reach me is email or LinkedIn.</p>
+    <div class="contact-grid">
+      <a class="contact-card" href="mailto:pyaeshunnlm@gmail.com">
+        <div class="label">Email</div>
+        <div class="value">pyaeshunnlm@gmail.com</div>
+      </a>
+      <a class="contact-card" href="tel:+66962967126">
+        <div class="label">Phone</div>
+        <div class="value">+66 96 296 7126</div>
+      </a>
+      <a class="contact-card" href="https://github.com/Crystal-stillalive" target="_blank" rel="noopener">
+        <div class="label">GitHub</div>
+        <div class="value">github.com/Crystal-stillalive</div>
+      </a>
+      <a class="contact-card" href="https://linkedin.com/in/pyae-shunn-le-maung" target="_blank" rel="noopener">
+        <div class="label">LinkedIn</div>
+        <div class="value">linkedin.com/in/pyae-shunn-le-maung</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Built by Pyae Shunn Le Maung.
+</footer>
+
+</body>
+</html>
